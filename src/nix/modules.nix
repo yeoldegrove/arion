@@ -5,4 +5,5 @@
     ./modules/composition/networks.nix
     ./modules/composition/service-info.nix
     ./modules/composition/composition.nix
+    ./modules/composition/secrets.nix
 ]

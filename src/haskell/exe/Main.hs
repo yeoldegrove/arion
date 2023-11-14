@@ -92,7 +92,7 @@ parseCommand =
       <> commandDC runBuildAndDC "bundle" "Generate a Docker bundle from the Compose file"
       <> commandDC runEvalAndDC "config" "Validate and view the Compose file"
       <> commandDC runBuildAndDC "create" "Create services"
-      <> commandDC runEvalAndDC "down" "Stop and remove containers, networks, images, and volumes"
+      <> commandDC runEvalAndDC "down" "Stop and remove containers, networks, images, secrets, and volumes"
       <> commandDC runEvalAndDC "events" "Receive real time events from containers"
       <> commandDC runDC "help" "Get help on a command"
       <> commandDC runEvalAndDC "images" "List images"

@@ -292,6 +292,52 @@ in
         default = [];
         description = serviceRef "networks";
       };
+    service.secrets =
+      let
+        secretsModule = submodule ({ config, options, ...}: {
+          options = {
+            source = mkOption {
+              type = nullOr str;
+              default = null;
+              description = dockerComposeRef "secrets";
+            };
+            uid = mkOption {
+              type = nullOr (either str int);
+              default = null;
+              description = dockerComposeRef "secrets";
+            };
+            gid = mkOption {
+              type = nullOr (either str int);
+              default = null;
+              description = dockerComposeRef "secrets";
+            };
+            mode = mkOption {
+              type = nullOr str;
+              # default = "0444";
+              default = null;
+              description = ''
+                The default value of is usually 0444. This option may not be supported
+                when not deploying to a Swarm.
+
+                ${dockerComposeRef "secrets"}
+              '';
+            };
+          };
+        });
+      in
+      mkOption {
+        type = either (listOf str) (attrsOf secretsModule);
+        default = {};
+        description = serviceRef "secrets";
+        example = {
+          redis_secret = {
+            source = "web_cache_redis_secret";
+            uid = 123;
+            gid = 123;
+            mode = "0440";
+          };
+        };
+      };
     service.stop_signal = mkOption {
       type = nullOr str;
       default = null;
@@ -378,6 +424,8 @@ in
       else config.service.networks;
   } // lib.optionalAttrs (config.service.restart != null) {
     inherit (config.service) restart;
+  } // lib.optionalAttrs (secrets != null) {
+    inherit secrets;    
   } // lib.optionalAttrs (config.service.stop_signal != null) {
     inherit (config.service) stop_signal;
   } // lib.optionalAttrs (config.service.tmpfs != []) {

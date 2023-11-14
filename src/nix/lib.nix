@@ -9,11 +9,15 @@ let
   networkRef = fragment:
     ''See ${link "https://docs.docker.com/compose/compose-file/06-networks/#${fragment}" "Docker Compose Network #${fragment}"}'';
 
+  secretRef = fragment:
+    ''See ${link "https://docs.docker.com/compose/compose-file/09-secrets/#${fragment}" "Docker Compose Secrets #${fragment}"}'';
+
 in
 {
   inherit
     link
     networkRef
     serviceRef
+    secretRef
     ;
 }
